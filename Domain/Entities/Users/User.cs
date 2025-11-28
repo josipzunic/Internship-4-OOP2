@@ -1,6 +1,7 @@
 using Domain.Common.Model;
 using Domain.Common.Validation;
 using Domain.Common.Validation.ValidationItems;
+using Domain.Persistence.User;
 
 namespace Domain.Entities.Users;
 
@@ -25,8 +26,18 @@ public class User
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public bool IsActive { get; set; } = true;
-    
-    public ValidationResult CreateOrUpdateValidation()
+
+    public async Task<Result<bool>> Create(IUserRepository userRepository)
+    {
+        ValidationResult validationResult = await CreateOrUpdateValidation();
+        if (validationResult.HasErrors)
+            return new Result<bool>(false, validationResult);
+
+        await userRepository.InsertAsync(this);
+        
+        return new Result<bool>(true, validationResult);
+    }
+    public async Task<ValidationResult> CreateOrUpdateValidation()
     {
         var validationResult = new ValidationResult();
         
@@ -50,7 +61,7 @@ public class User
 
         if (!string.IsNullOrWhiteSpace(Website))
         {
-            if (!isValidUrl(Website))
+            if (!IsValidUrl(Website))
                 validationResult.AddValidationItems(ValidationItems.User.IncorrectUrlFormat);
             else if(Website.Length > MaxWebsiteLength)
                 validationResult.AddValidationItems(ValidationItems.User.MaxWebsiteLength);
@@ -59,7 +70,7 @@ public class User
         if (string.IsNullOrWhiteSpace(Email))
             validationResult.AddValidationItems((ValidationItems.User.EmailRequired));
         else 
-            if (!isValidEmail(Email))
+            if (!IsValidEmail(Email))
                 validationResult.AddValidationItems(ValidationItems.User.IncorrectEmailFormat);
 
         if (GeoLat > 90m || GeoLat < -90m)
@@ -78,14 +89,14 @@ public class User
     public void Deactivate() => IsActive = false;
     public void Activate() => IsActive = true;
 
-    public bool isValidUrl(string url)
+    public bool IsValidUrl(string url)
     {
         bool isValid = Uri.TryCreate(url, UriKind.Absolute, out var uriResult)
                        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         return isValid;
     }
 
-    public bool isValidEmail(string email)
+    public bool IsValidEmail(string email)
     {
         try
         {

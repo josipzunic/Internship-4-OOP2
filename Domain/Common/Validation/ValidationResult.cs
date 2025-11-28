@@ -1,3 +1,4 @@
+
 namespace Domain.Common.Validation;
 
 public class ValidationResult
