@@ -109,5 +109,29 @@ public static partial class ValidationItems
             ValidationSeverity = ValidationSeverity.Error,
             ValidationType = ValidationType.FormalValidation
         };
+
+        public static readonly ValidationItem UsernameAlreadyExists = new()
+        {
+            Code = $"{CodePrefix}14",
+            Message = "Korisnik s danim korisničkim imenom već postoji",
+            ValidationSeverity = ValidationSeverity.Error,
+            ValidationType = ValidationType.BusinessRule
+        };
+
+        public static readonly ValidationItem EmailAlreadyExists = new()
+        {
+            Code = $"{CodePrefix}15",
+            Message = "Korisnik s danom email adresom već postoji",
+            ValidationSeverity = ValidationSeverity.Error,
+            ValidationType = ValidationType.BusinessRule
+        };
+        
+        public static readonly ValidationItem Within3KmExists = new() 
+        {
+            Code = $"{CodePrefix}16",
+            Message = "Postoji aktivni korisnik u radijusu od 3 km",
+            ValidationSeverity = ValidationSeverity.Error,
+            ValidationType = ValidationType.BusinessRule
+        };
     }
 }

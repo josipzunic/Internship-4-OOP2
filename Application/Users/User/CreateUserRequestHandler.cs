@@ -30,16 +30,23 @@ public class CreateUserRequestHandler : RequestHandler<CreateUserRequest, Succes
             AdressCity = request.AdressCity,
             GeoLat = request.GeoLat,
             GeoLng = request.GeoLng,
-            Website = request.Website
+            Website = request.Website,
+            Username = request.Username,
+            Password = Guid.NewGuid().ToString(),
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
 
         var validationResult = await user.Create(_unitOfWork.Repository);
-        result.SetValidationResult(validationResult);
+        result.SetValidationResult(validationResult.ValidationResult);
 
         if (result.HasErrors)
             return result;
 
         await _unitOfWork.SaveAsync();
+        
+        result.SetResult(new SuccessPostResponse(user.Id));
+        return result;
     }
 
     protected override Task<bool> IsAuthorized()

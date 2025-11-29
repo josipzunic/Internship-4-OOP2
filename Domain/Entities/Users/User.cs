@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Domain.Common.Model;
 using Domain.Common.Validation;
 using Domain.Common.Validation.ValidationItems;
@@ -10,7 +11,7 @@ public class User
     public const int MaxNameLength = 100;
     public const int MaxAdressLength = 150;
     public const int MaxAdressCityLength = 100;
-    public const int MaxWebsiteLength = 200;
+    public const int MaxWebsiteLength = 100;
     
     public int Id { get; set; }
     public string Name { get; set; }

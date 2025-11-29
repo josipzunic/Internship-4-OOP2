@@ -10,7 +10,7 @@ public class Company
 {
     public const int MaxCompanyNameLength = 150;
     
-    public string Id { get; set; }
+    public int Id { get; set; }
     public string CompanyName { get; set; }
 
     public async Task<Result<bool>> Create(ICompanyRepository companyRepository)

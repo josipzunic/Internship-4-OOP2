@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Domain.Entities.Companies;
 using Domain.Persistence.Common;
 

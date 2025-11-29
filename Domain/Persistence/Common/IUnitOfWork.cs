@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Domain.Persistence.Common;
 
 public interface IUnitOfWork
