@@ -12,9 +12,10 @@ public class UserRepository : Repository<User, int>, IUserRepository
     private readonly ApplicationDbContext _dbContext;
     private readonly IDapperManager _dapperManager;
     
-    public UserRepository(DbContext dbContext, IDapperManager dapperManager) : base(dbContext)
+    public UserRepository(ApplicationDbContext dbContext, IDapperManager dapperManager) : base(dbContext)
     {
         _dapperManager = dapperManager;
+        _dbContext = dbContext;
     }
 
     public async Task<User> GetById(int id)
@@ -40,5 +41,10 @@ public class UserRepository : Repository<User, int>, IUserRepository
     public async Task<List<User>> GetAllUsersAsync()
     {
         return await _dbContext.Users.ToListAsync();
+    }
+
+    public async Task<User> GetByUsername(string username)
+    {
+        return await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == username);
     }
 }

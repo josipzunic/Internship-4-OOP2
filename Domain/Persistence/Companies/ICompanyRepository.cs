@@ -7,4 +7,7 @@ namespace Domain.Persistence.Companies;
 public interface ICompanyRepository : IRepository<Company, int>
 {
     Task<Company> GetById(int id);
+    Task<Company> GetByCompanyName(string companyName);
+    Task<Company> ExistsCompanyNameAsync(string companyName);
+    Task<List<Company>> GetAllCompanies();
 }

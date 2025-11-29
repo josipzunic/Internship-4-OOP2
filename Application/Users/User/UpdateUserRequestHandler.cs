@@ -31,7 +31,7 @@ public class UpdateUserRequestHandler : RequestHandler<UpdateUserRequest, Succes
             validationResult.AddValidationItems(new ValidationItem
             {
                 Code = "{UserNotFound}",
-                Message = "User with given id was not found",
+                Message = "Korisnik s danim id-om nije pronađen",
                 ValidationSeverity = ValidationSeverity.Error,
                 ValidationType = ValidationType.BusinessRule
             });

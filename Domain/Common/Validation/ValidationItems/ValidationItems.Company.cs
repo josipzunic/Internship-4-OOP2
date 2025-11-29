@@ -22,5 +22,13 @@ public static partial class ValidationItems
             ValidationSeverity = ValidationSeverity.Error,
             ValidationType = ValidationType.FormalValidation
         };
+        
+        public static readonly ValidationItem CompanyNameUnique = new()
+        {
+            Code = $"{CodePrefix}3",
+            Message = "Kompanija s tim imenom već postoji",
+            ValidationSeverity = ValidationSeverity.Error,
+            ValidationType = ValidationType.BusinessRule
+        };
     }
 }

@@ -9,7 +9,6 @@
     <ItemGroup>
       <Folder Include="Database\Configurations\Common\" />
       <Folder Include="Database\Configurations\Users\" />
-      <Folder Include="Repositories\Company\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -64,6 +64,7 @@ public class CreateUserRequestHandler : RequestHandler<CreateUserRequest, Succes
         if (result.HasErrors)
             return result;
 
+        await _unitOfWork.Repository.InsertAsync(user);
         await _unitOfWork.SaveAsync();
         
         result.SetResult(new SuccessPostResponse(user.Id));
