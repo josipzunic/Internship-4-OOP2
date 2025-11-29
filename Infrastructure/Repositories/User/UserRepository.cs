@@ -36,4 +36,9 @@ public class UserRepository : Repository<User, int>, IUserRepository
     {
         return await _dbContext.Users.Where(u => u.IsActive).ToListAsync();
     }
+
+    public async Task<List<User>> GetAllUsersAsync()
+    {
+        return await _dbContext.Users.ToListAsync();
+    }
 }

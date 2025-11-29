@@ -10,5 +10,6 @@ public interface IUserRepository : IRepository<User, int>
     Task<User> UsernameExistsAsync(string username);
     Task<User> EmailExistsAsync(string email);
     Task<List<User>> GetAllActiveUsersAsync();
+    Task<List<User>> GetAllUsersAsync();
 
 }

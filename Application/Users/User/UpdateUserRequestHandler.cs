@@ -77,7 +77,7 @@ public class UpdateUserRequestHandler : RequestHandler<UpdateUserRequest, Succes
 
     protected override Task<bool> IsAuthorized()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(true);
     }
 
     private void UpdateUser(Domain.Entities.Users.User user, UpdateUserRequest request)
