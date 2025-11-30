@@ -9,6 +9,7 @@ using Infrastructure.Repositories.Company;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http;
 
 namespace Infrastructure;
 
@@ -60,7 +61,8 @@ public static class DependencyInjection
             services.AddScoped<IDapperManager>(_ =>
                 new DapperManager(configuration.GetConnectionString("usersDatabase")));
 
+            services.AddMemoryCache();
             services.AddScoped<ICacheServices, CacheService>();
-            services.AddScoped<IRetrieveExternalUsers, RetrieveExternalUsers>();
+            services.AddHttpClient<IRetrieveExternalUsers, RetrieveExternalUsers>();
         }
     }

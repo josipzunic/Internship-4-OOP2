@@ -18,6 +18,12 @@ public class UpdateCompanyRequestHandler : RequestHandler<UpdateCompanyRequest, 
 {
     private readonly ICompanyUnitOfWork _companyUnitOfWork;
     private readonly IUserUnitOfWork _userUnitOfWork;
+
+    public UpdateCompanyRequestHandler(ICompanyUnitOfWork companyUnitOfWork, IUserUnitOfWork userUnitOfWork)
+    {
+        _companyUnitOfWork = companyUnitOfWork;
+        _userUnitOfWork = userUnitOfWork;
+    }
     protected async override Task<Result<SuccessPostResponse>> HandleRequest(UpdateCompanyRequest request, Result<SuccessPostResponse> result)
     {
         var company = await _companyUnitOfWork.Repository.GetById(request.Id);

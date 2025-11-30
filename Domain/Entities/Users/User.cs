@@ -3,7 +3,7 @@ using Domain.Common.Model;
 using Domain.Common.Validation;
 using Domain.Common.Validation.ValidationItems;
 using Domain.Persistence.User;
-
+using System;
 namespace Domain.Entities.Users;
 
 public class User

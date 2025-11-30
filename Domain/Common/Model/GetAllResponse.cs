@@ -1,4 +1,5 @@
 namespace Domain.Common.Model;
+using System.Collections.Generic;
 
 public class GetAllResponse<TValue>
 {

@@ -16,6 +16,12 @@ public class DeleteCompanyRequestHandler : RequestHandler<DeleteCompanyRequest, 
 {
     private readonly ICompanyUnitOfWork _companyUnitOfWork;
     private readonly IUserUnitOfWork _userUnitOfWork;
+
+    public DeleteCompanyRequestHandler(ICompanyUnitOfWork companyUnitOfWork, IUserUnitOfWork userUnitOfWork)
+    {
+        _companyUnitOfWork = companyUnitOfWork;
+        _userUnitOfWork = userUnitOfWork;
+    }
     protected override async Task<Result<SuccessPostResponse>> HandleRequest(DeleteCompanyRequest request, Result<SuccessPostResponse> result)
     {
         var company = await _companyUnitOfWork.Repository.GetById(request.Id);

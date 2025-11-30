@@ -3,7 +3,7 @@ using Domain.Persistence.Common;
 
 namespace Domain.Persistence.User;
 using Domain.Entities.Users;
-
+using System.Collections.Generic;
 public interface IUserRepository : IRepository<User, int>
 {
     Task<User> GetById(int id);

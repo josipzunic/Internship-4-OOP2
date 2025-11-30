@@ -18,6 +18,12 @@ public class GetCompanyByIdRequestHandler : RequestHandler<GetCompanyByIdRequest
 {
     private readonly ICompanyUnitOfWork _companyUnitOfWork;
     private readonly IUserUnitOfWork _userUnitOfWork;
+
+    public GetCompanyByIdRequestHandler(ICompanyUnitOfWork companyUnitOfWork, IUserUnitOfWork userUnitOfWork)
+    {
+        _companyUnitOfWork = companyUnitOfWork;
+        _userUnitOfWork = userUnitOfWork;
+    }
     protected override async Task<Result<GetCompanyByIdResponse>> HandleRequest(GetCompanyByIdRequest request, Result<GetCompanyByIdResponse> result)
     {
         var user = await _userUnitOfWork.Repository.GetByUsername(request.Username);

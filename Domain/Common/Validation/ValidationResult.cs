@@ -1,5 +1,6 @@
-
+using System.Collections.Generic;
 namespace Domain.Common.Validation;
+using System.Linq;
 
 public class ValidationResult
 {
