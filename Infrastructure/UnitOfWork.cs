@@ -6,10 +6,10 @@ namespace Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly UsersDbContext _dbContext;
     private IDbContextTransaction _transaction;
 
-    public UnitOfWork(ApplicationDbContext dbContext) => _dbContext = dbContext;
+    public UnitOfWork(UsersDbContext dbContext) => _dbContext = dbContext;
     
     
     public async Task CreateTransaction()

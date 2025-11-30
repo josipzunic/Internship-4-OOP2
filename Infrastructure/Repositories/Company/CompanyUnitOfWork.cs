@@ -1,6 +1,31 @@
+using Domain.Persistence.Companies;
+using Domain.Persistence.User;
+using Infrastructure.Database.Configurations;
+
 namespace Infrastructure.Repositories.Company;
 
-public class CompanyUnitOfWork
+public class CompanyUnitOfWork : ICompanyUnitOfWork
 {
-    
+    private readonly CompaniesDbContext _dbContext;
+    public ICompanyRepository Repository { get; set; }
+    public async Task CreateTransaction()
+    {
+        await _dbContext.Database.BeginTransactionAsync();
+    }
+
+    public async Task Commit()
+    {
+        await _dbContext.SaveChangesAsync();
+        await _dbContext.Database.CommitTransactionAsync();
+    }
+
+    public async Task Rollback()
+    {
+        await _dbContext.Database.RollbackTransactionAsync();
+    }
+
+    public async Task SaveAsync()
+    {
+        await _dbContext.SaveChangesAsync();
+    }
 }

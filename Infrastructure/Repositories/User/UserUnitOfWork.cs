@@ -5,10 +5,10 @@ namespace Infrastructure.Repositories;
 
 public class UserUnitOfWork : IUserUnitOfWork
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly UsersDbContext _dbContext;
     public IUserRepository Repository { get; set; }
     
-    public UserUnitOfWork(ApplicationDbContext dbContext,  IUserRepository repository)
+    public UserUnitOfWork(UsersDbContext dbContext,  IUserRepository repository)
     {
         _dbContext = dbContext;
         Repository = repository;

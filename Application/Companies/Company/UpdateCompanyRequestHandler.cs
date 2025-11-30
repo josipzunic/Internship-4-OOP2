@@ -56,7 +56,7 @@ public class UpdateCompanyRequestHandler : RequestHandler<UpdateCompanyRequest, 
         var validationResult = await company.CreateOrUpdateValidation();
 
         var existingCompanyName =
-            await _companyUnitOfWork.Repository.ExistsCompanyNameAsync(request.CompanyName);
+            await _companyUnitOfWork.Repository.GetByCompanyName(request.CompanyName);
         if (existingCompanyName != null && existingCompanyName.Id != company.Id)
             validationResult.AddValidationItems(ValidationItems.Company.CompanyNameUnique);
         

@@ -9,10 +9,10 @@ namespace Infrastructure.Repositories;
 
 public class UserRepository : Repository<User, int>, IUserRepository
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly UsersDbContext _dbContext;
     private readonly IDapperManager _dapperManager;
     
-    public UserRepository(ApplicationDbContext dbContext, IDapperManager dapperManager) : base(dbContext)
+    public UserRepository(UsersDbContext dbContext, IDapperManager dapperManager) : base(dbContext)
     {
         _dapperManager = dapperManager;
         _dbContext = dbContext;

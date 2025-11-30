@@ -1,11 +1,12 @@
+using Domain.Entities.Companies;
 using Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.Configurations;
 
-public class ApplicationDbContext : DbContext
+public class UsersDbContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    public UsersDbContext(DbContextOptions<UsersDbContext> options)
         : base(options)
     {
         
@@ -15,7 +16,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        builder.ApplyConfigurationsFromAssembly(typeof(UsersDbContext).Assembly);
         builder.HasDefaultSchema(Schemas.Default);
     }
 }
