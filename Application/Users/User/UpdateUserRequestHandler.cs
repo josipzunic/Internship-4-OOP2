@@ -22,6 +22,11 @@ public class UpdateUserRequest
 public class UpdateUserRequestHandler : RequestHandler<UpdateUserRequest, SuccessPostResponse>
 {
     private readonly IUserUnitOfWork _unitOfWork;
+
+    public UpdateUserRequestHandler(IUserUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
     protected override async Task<Result<SuccessPostResponse>> HandleRequest(UpdateUserRequest request, Result<SuccessPostResponse> result)
     {
         var user = await _unitOfWork.Repository.GetById(request.Id);

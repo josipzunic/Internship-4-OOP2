@@ -13,6 +13,8 @@ public class ActivateUserRequest
 public class ActivateUserRequestHandler : RequestHandler<ActivateUserRequest, SuccessPostResponse>
 {
     private readonly IUserUnitOfWork _unitOfWork;
+
+    public ActivateUserRequestHandler(IUserUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
     protected async override Task<Result<SuccessPostResponse>> HandleRequest(ActivateUserRequest request, Result<SuccessPostResponse> result)
     {
         var user = await _unitOfWork.Repository.GetById(request.Id);

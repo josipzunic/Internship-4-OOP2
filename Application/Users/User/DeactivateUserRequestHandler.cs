@@ -13,6 +13,9 @@ public class DeactivateUserRequest
 public class DeactivateUserRequestHandler : RequestHandler<DeactivateUserRequest, SuccessPostResponse>
 {
     private readonly IUserUnitOfWork _unitOfWork;
+
+    public DeactivateUserRequestHandler(IUserUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+
     protected async override Task<Result<SuccessPostResponse>> HandleRequest(DeactivateUserRequest request, Result<SuccessPostResponse> result)
     {
         var user = await _unitOfWork.Repository.GetById(request.Id);

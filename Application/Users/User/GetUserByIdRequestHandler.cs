@@ -13,6 +13,8 @@ public class GetUserByIdRequest
 public class GetUserByIdRequestHandler : RequestHandler<GetUserByIdRequest, GetUserByIdResponse>
 {
     private readonly IUserUnitOfWork _unitOfWork;
+    
+    public GetUserByIdRequestHandler(IUserUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
     protected async override Task<Result<GetUserByIdResponse>> HandleRequest(GetUserByIdRequest request, Result<GetUserByIdResponse> result)
     {
         var user = await _unitOfWork.Repository.GetById(request.Id);

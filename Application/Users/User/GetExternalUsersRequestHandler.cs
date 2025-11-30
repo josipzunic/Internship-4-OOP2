@@ -15,6 +15,14 @@ public class GetExternalUsersRequestHandler : RequestHandler<GetExternalUsersReq
     private readonly IRetrieveExternalUsers _externalUserService;
     private readonly ICacheServices _cacheService;
 
+    public GetExternalUsersRequestHandler(IUserUnitOfWork unitOfWork,  IRetrieveExternalUsers externalUserService, 
+        ICacheServices cacheService)
+    {
+        _unitOfWork = unitOfWork;
+        _externalUserService = externalUserService;
+        _cacheService = cacheService;
+    }
+
     protected override async Task<Result<GetExternalUsersResponse>> HandleRequest(GetExternalUsersRequest request,
         Result<GetExternalUsersResponse> result)
     {

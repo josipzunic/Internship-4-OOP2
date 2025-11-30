@@ -13,6 +13,8 @@ public class DeleteUserRequestHandler : RequestHandler<DeleteUserRequest, Succes
 {
     private readonly IUserUnitOfWork _unitOfWork;
 
+    public DeleteUserRequestHandler(IUserUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+
     protected async override Task<Result<SuccessPostResponse>> HandleRequest(DeleteUserRequest request, Result<SuccessPostResponse> result)
     {
         var user = await _unitOfWork.Repository.GetById(request.Id);
