@@ -36,6 +36,8 @@ public class DeactivateUserRequestHandler : RequestHandler<DeactivateUserRequest
         
         user.IsActive = false;
         user.UpdatedAt = DateTime.UtcNow;
+        if (user.CreatedAt.Kind == DateTimeKind.Unspecified)
+            user.CreatedAt = DateTime.SpecifyKind(user.CreatedAt, DateTimeKind.Utc);
         
         _unitOfWork.Repository.Update(user);
         await _unitOfWork.SaveAsync();

@@ -12,11 +12,12 @@ public class UpdateUserRequest
     public string Name { get; set; }
     public string Username { get; set; }
     public string Email { get; set; }
-    public string AdressStreet { get; set; }
-    public string AdressCity { get; set; }
-    public decimal GeoLat { get; set; }
-    public decimal GeoLng { get; set; }
-    public string Website { get; set; }
+    public string Password { get; set; }
+    public string? AddressStreet { get; set; }
+    public string? AddressCity { get; set; }
+    public double? GeoLat { get; set; }
+    public double? GeoLng { get; set; }
+    public string? Website { get; set; }
 }
 
 public class UpdateUserRequestHandler : RequestHandler<UpdateUserRequest, SuccessPostResponse>
@@ -57,10 +58,14 @@ public class UpdateUserRequestHandler : RequestHandler<UpdateUserRequest, Succes
         if (existingUsername != null && existingUsername.Id != user.Id)
             validatioResult.AddValidationItems(ValidationItems.User.UsernameAlreadyExists);
 
+        var passwordValidity = await _unitOfWork.Repository.GetById(user.Id);
+        if (passwordValidity == null || passwordValidity.Password == ""  || passwordValidity.Password == null)
+            validatioResult.AddValidationItems(ValidationItems.User.PasswordRequired);
+
         var activeUsers = await _unitOfWork.Repository.GetAllActiveUsersAsync();
         foreach (var activeUser in activeUsers.Where(u => u.Id != user.Id))
         {
-            decimal distance = DistanceHelper.Distance(user.GeoLat, user.GeoLng, activeUser.GeoLat, activeUser.GeoLng);
+            double distance = DistanceHelper.Distance(user.GeoLat ?? 0, user.GeoLng ?? 0, activeUser.GeoLat ?? 0, activeUser.GeoLng ?? 0);
             if (distance < 3)
             {
                 validatioResult.AddValidationItems(ValidationItems.User.Within3KmExists);
@@ -90,11 +95,14 @@ public class UpdateUserRequestHandler : RequestHandler<UpdateUserRequest, Succes
         user.Name = request.Name;
         user.Username = request.Username;
         user.Email = request.Email;
-        user.AdressStreet = request.AdressStreet;
-        user.AdressCity = request.AdressCity;
+        user.Password = request.Password;
+        user.AddressStreet = request.AddressStreet;
+        user.AddressCity = request.AddressCity;
         user.GeoLat = request.GeoLat;
         user.GeoLng = request.GeoLng;
         user.Website = request.Website;
         user.UpdatedAt = DateTime.UtcNow;
+        if (user.CreatedAt.Kind == DateTimeKind.Unspecified)
+            user.CreatedAt = DateTime.SpecifyKind(user.CreatedAt, DateTimeKind.Utc);
     }
 }

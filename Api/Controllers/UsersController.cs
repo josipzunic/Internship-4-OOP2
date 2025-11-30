@@ -52,7 +52,7 @@ public class UsersController : ControllerBase
         return result.ToActionResult(this);
     }
 
-    [HttpPost("activate/{id}")]
+    [HttpPut("activate/{id}")]
     public async Task<ActionResult> ActivateUser([FromServices] IUserUnitOfWork unitOfWork, [FromRoute] int id)
     {
         var requestHandlet = new ActivateUserRequestHandler(unitOfWork);
@@ -60,7 +60,7 @@ public class UsersController : ControllerBase
         return result.ToActionResult(this);
     }
 
-    [HttpPost("deactivate/{id}")]
+    [HttpPut("deactivate/{id}")]
     public async Task<ActionResult> DeactivateUser([FromServices] IUserUnitOfWork unitOfWork, [FromRoute] int id)
     {
         var requestHandler = new DeactivateUserRequestHandler(unitOfWork);

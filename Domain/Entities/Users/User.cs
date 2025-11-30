@@ -17,11 +17,10 @@ public class User
     public string Name { get; set; }
     public string Username { get; set; }
     public string Email { get; set; }
-    public string CompanyName { get; set; }
-    public string AdressStreet { get; set; }
-    public string AdressCity { get; set; }
-    public decimal GeoLat { get; set; }
-    public decimal GeoLng { get; set; }
+    public string? AddressStreet { get; set; }
+    public string? AddressCity { get; set; }
+    public double? GeoLat { get; set; }
+    public double? GeoLng { get; set; }
     public string? Website { get; set; }
     public string Password { get; set; }
     public DateTime CreatedAt { get; set; }
@@ -48,17 +47,11 @@ public class User
             if(Name.Length > MaxNameLength) 
                 validationResult.AddValidationItems(ValidationItems.User.MaxNameLength);
         
-        if (string.IsNullOrWhiteSpace(AdressStreet))
-            validationResult.AddValidationItems(ValidationItems.User.AdressStreetRequired);
-        else 
-            if (AdressStreet.Length > MaxAdressLength)
-                validationResult.AddValidationItems(ValidationItems.User.MaxAdressLength);
+        if (AddressStreet?.Length > MaxAdressLength)
+            validationResult.AddValidationItems(ValidationItems.User.MaxAdressLength);
         
-        if(string.IsNullOrWhiteSpace(AdressCity))
-            validationResult.AddValidationItems(ValidationItems.User.AdressCityRequired);
-        else 
-            if (AdressCity.Length > MaxAdressCityLength)
-                validationResult.AddValidationItems(ValidationItems.User.MaxAdressCityLength);
+        if (AddressCity?.Length > MaxAdressCityLength)
+            validationResult.AddValidationItems(ValidationItems.User.MaxAdressCityLength);
 
         if (!string.IsNullOrWhiteSpace(Website))
         {
@@ -74,10 +67,10 @@ public class User
             if (!IsValidEmail(Email))
                 validationResult.AddValidationItems(ValidationItems.User.IncorrectEmailFormat);
 
-        if (GeoLat > 90m || GeoLat < -90m)
+        if (GeoLat > 90 || GeoLat < -90)
             validationResult.AddValidationItems(ValidationItems.User.GeoLatRange);
         
-        if (GeoLng > 180m || GeoLng < -180m)
+        if (GeoLng > 180 || GeoLng < -180)
             validationResult.AddValidationItems(ValidationItems.User.GeoLngRange);
         
         if (string.IsNullOrWhiteSpace(Username))

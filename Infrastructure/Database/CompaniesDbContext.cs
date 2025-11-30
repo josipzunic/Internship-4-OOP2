@@ -15,7 +15,8 @@ public class CompaniesDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfigurationsFromAssembly(typeof(CompaniesDbContext).Assembly);
-        builder.HasDefaultSchema(Schemas.Default);
+        base.OnModelCreating(builder);
+        
+        builder.ApplyConfiguration(new CompaniesConfiguration());
     }
 }

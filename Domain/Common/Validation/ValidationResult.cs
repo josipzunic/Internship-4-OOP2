@@ -4,7 +4,7 @@ using System.Linq;
 
 public class ValidationResult
 {
-    private List<ValidationItem> _validationItems;
+    private List<ValidationItem> _validationItems = new ();
     public IReadOnlyList<ValidationItem>  ValidationItems => _validationItems;
     
     public bool HasErrors => _validationItems.Any(validationResult => 

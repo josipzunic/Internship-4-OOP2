@@ -12,10 +12,10 @@ public class CreateUserRequest
     public string Name { get; set; }
     public string Username { get; set; }
     public string Email { get; set; }
-    public string AdressStreet { get; set; }
-    public string AdressCity { get; set; }
-    public decimal GeoLat { get; set; }
-    public decimal GeoLng { get; set; }
+    public string? AddressStreet { get; set; }
+    public string? AddressCity { get; set; }
+    public double? GeoLat { get; set; }
+    public double? GeoLng { get; set; }
     public string? Website { get; set; }
 }
 public class CreateUserRequestHandler : RequestHandler<CreateUserRequest, SuccessPostResponse>
@@ -29,8 +29,8 @@ public class CreateUserRequestHandler : RequestHandler<CreateUserRequest, Succes
         {
             Name = request.Name,
             Email = request.Email,
-            AdressStreet = request.AdressStreet,
-            AdressCity = request.AdressCity,
+            AddressStreet = request.AddressStreet,
+            AddressCity = request.AddressCity,
             GeoLat = request.GeoLat,
             GeoLng = request.GeoLng,
             Website = request.Website,
@@ -53,7 +53,7 @@ public class CreateUserRequestHandler : RequestHandler<CreateUserRequest, Succes
         var activeUsers = await _unitOfWork.Repository.GetAllActiveUsersAsync();
         foreach (var activeUser in activeUsers.Where(u => u.Id != user.Id))
         {
-            decimal distance = DistanceHelper.Distance(user.GeoLat, user.GeoLng, activeUser.GeoLat, activeUser.GeoLng);
+            double distance = DistanceHelper.Distance(user.GeoLat ?? 0, user.GeoLng ?? 0, activeUser.GeoLat ?? 0, activeUser.GeoLng ?? 0);
             if (distance < 3)
             {
                 validationResult.ValidationResult.AddValidationItems(ValidationItems.User.Within3KmExists);

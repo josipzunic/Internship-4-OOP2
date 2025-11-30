@@ -33,8 +33,10 @@ public class ActivateUserRequestHandler : RequestHandler<ActivateUserRequest, Su
             return result;
         }
         
-        user.IsActive = false;
+        user.IsActive = true;
         user.UpdatedAt = DateTime.UtcNow;
+        if (user.CreatedAt.Kind == DateTimeKind.Unspecified)
+            user.CreatedAt = DateTime.SpecifyKind(user.CreatedAt, DateTimeKind.Utc);
         
         _unitOfWork.Repository.Update(user);
         await _unitOfWork.SaveAsync();

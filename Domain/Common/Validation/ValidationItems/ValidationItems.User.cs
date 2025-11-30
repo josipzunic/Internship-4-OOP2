@@ -54,22 +54,6 @@ public static partial class ValidationItems
             ValidationType = ValidationType.FormalValidation
         };
 
-        public static readonly ValidationItem AdressStreetRequired = new()
-        {
-            Code = $"{CodePrefix}7",
-            Message = "Polje adresa stanovanja ne smije biti prazno",
-            ValidationSeverity = ValidationSeverity.Error,
-            ValidationType = ValidationType.FormalValidation
-        };
-
-        public static readonly ValidationItem AdressCityRequired = new()
-        {
-            Code = $"{CodePrefix}8",
-            Message = "Polje grad stanovanaj ne smije biti prazno",
-            ValidationSeverity = ValidationSeverity.Error,
-            ValidationType = ValidationType.FormalValidation
-        };
-
         public static readonly ValidationItem IncorrectEmailFormat = new()
         {
             Code = $"{CodePrefix}9",
@@ -132,6 +116,14 @@ public static partial class ValidationItems
             Message = "Postoji aktivni korisnik u radijusu od 3 km",
             ValidationSeverity = ValidationSeverity.Error,
             ValidationType = ValidationType.BusinessRule
+        };
+        
+        public static readonly ValidationItem PasswordRequired = new() 
+        {
+            Code = $"{CodePrefix}17",
+            Message = "Polje lozinka ne smije biti prazno",
+            ValidationSeverity = ValidationSeverity.Error,
+            ValidationType = ValidationType.FormalValidation
         };
     }
 }

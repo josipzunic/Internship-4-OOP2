@@ -1,6 +1,6 @@
-using System.Xml;
 using Application.Common.Model;
 using Application.DTOs.Users;
+using Domain.Common.Validation;
 using Domain.Persistence.User;
 using Infrastructure.Persistence;
 
@@ -41,8 +41,8 @@ public class GetExternalUsersRequestHandler : RequestHandler<GetExternalUsersReq
             Name = u.Name,
             Email = u.Email,
             Username = u.Username,
-            AdressStreet = u.AdressStreet,
-            AdressCity = u.AdressCity,
+            AddressStreet = u.AddressStreet,
+            AddressCity = u.AddressCity,
             GeoLat = u.GeoLat,
             GeoLng = u.GeoLng,
             Website = u.Website,
@@ -55,6 +55,32 @@ public class GetExternalUsersRequestHandler : RequestHandler<GetExternalUsersReq
         
         await _cacheService.Set(key, dtoList, expiration);
         
+        var validationResult = new ValidationResult();
+
+
+        foreach (var dto in dtoList)
+        {
+            var existingUser = await _unitOfWork.Repository.GetByUsername(dto.Username);
+            if (existingUser != null)
+            {
+                validationResult.AddValidationItems(new ValidationItem
+                {
+                    Code = "{UserAlreadyExists}",
+                    Message = $"Korisnik '{dto.Username}' već postoji",
+                    ValidationSeverity = ValidationSeverity.Error,
+                    ValidationType = ValidationType.BusinessRule
+                });
+            }
+        }
+
+
+        if (validationResult.HasErrors)
+        {
+            result.SetValidationResult(validationResult);
+            return result;
+        }
+
+
         foreach (var dto in dtoList)
         {
             var newUser = new Domain.Entities.Users.User
@@ -62,8 +88,8 @@ public class GetExternalUsersRequestHandler : RequestHandler<GetExternalUsersReq
                 Name = dto.Name,
                 Email = dto.Email,
                 Username = dto.Username,
-                AdressStreet = dto.AdressStreet,
-                AdressCity = dto.AdressCity,
+                AddressStreet = dto.AddressStreet,
+                AddressCity = dto.AddressCity,
                 GeoLat = dto.GeoLat,
                 GeoLng = dto.GeoLng,
                 Website = dto.Website,
@@ -71,9 +97,8 @@ public class GetExternalUsersRequestHandler : RequestHandler<GetExternalUsersReq
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
-                
+    
             await _unitOfWork.Repository.InsertAsync(newUser);
-            
         }
 
         await _unitOfWork.SaveAsync();

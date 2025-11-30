@@ -15,8 +15,8 @@ internal sealed class UsersConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.Email).HasColumnName("email");
         builder.Property(x => x.Name).HasColumnName("name");
         builder.Property(x => x.Username).HasColumnName("username");
-        builder.Property(x => x.AdressStreet).HasColumnName("adress_street");
-        builder.Property(x => x.AdressCity).HasColumnName("adress_city");
+        builder.Property(x => x.AddressStreet).HasColumnName("address_street");
+        builder.Property(x => x.AddressCity).HasColumnName("address_city");
         builder.Property(x => x.Website).HasColumnName("website");
         builder.Property(x=> x.GeoLat).HasColumnName("geo_lat");
         builder.Property(x => x.GeoLng).HasColumnName("geo_lng");
@@ -24,6 +24,6 @@ internal sealed class UsersConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.IsActive).HasColumnName("is_active");
         builder.Property(x => x.CreatedAt).HasColumnName("created_at");
         builder.Property(x => x.UpdatedAt).HasColumnName("updated_at");
-        
+        builder.Property(x => x.Password).HasColumnName("password");
     }
 }
