@@ -8,6 +8,12 @@ public class CompanyUnitOfWork : ICompanyUnitOfWork
 {
     private readonly CompaniesDbContext _dbContext;
     public ICompanyRepository Repository { get; set; }
+    
+    public CompanyUnitOfWork(CompaniesDbContext dbContext, ICompanyRepository repository)
+    {
+        _dbContext = dbContext;
+        Repository = repository;
+    }
     public async Task CreateTransaction()
     {
         await _dbContext.Database.BeginTransactionAsync();

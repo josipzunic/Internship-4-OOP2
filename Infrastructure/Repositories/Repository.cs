@@ -24,7 +24,6 @@ public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity 
     public async Task InsertAsync(TEntity entity)
     {
         await _dbSet.AddAsync(entity);
-        //await _context.SaveChangesAsync();
     }
 
     public void Update(TEntity entity)

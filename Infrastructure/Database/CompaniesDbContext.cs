@@ -5,7 +5,7 @@ namespace Infrastructure.Database.Configurations;
 
 public class CompaniesDbContext : DbContext
 {
-    public CompaniesDbContext(DbContextOptions<UsersDbContext> options)
+    public CompaniesDbContext(DbContextOptions<CompaniesDbContext> options)
         : base(options)
     {
         
@@ -15,7 +15,7 @@ public class CompaniesDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfigurationsFromAssembly(typeof(UsersDbContext).Assembly);
+        builder.ApplyConfigurationsFromAssembly(typeof(CompaniesDbContext).Assembly);
         builder.HasDefaultSchema(Schemas.Default);
     }
 }
